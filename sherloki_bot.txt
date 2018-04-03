@@ -1,4 +1,4 @@
-import json
+п»їimport json
 import telebot
 from telebot import types
 import time
@@ -19,19 +19,19 @@ class games:
 
                 jsObj.close()
             
-                self.players=dict()#словарь игроков ключ - id, значение - объект игрока
-                self.game_flag=False#флаг игры, пока игра не начата в состоянии False
+                self.players=dict()#СЃР»РѕРІР°СЂСЊ РёРіСЂРѕРєРѕРІ РєР»СЋС‡ - id, Р·РЅР°С‡РµРЅРёРµ - РѕР±СЉРµРєС‚ РёРіСЂРѕРєР°
+                self.game_flag=False#С„Р»Р°Рі РёРіСЂС‹, РїРѕРєР° РёРіСЂР° РЅРµ РЅР°С‡Р°С‚Р° РІ СЃРѕСЃС‚РѕСЏРЅРёРё False
                 
-                self.chat_id=None#id часта
+                self.chat_id=None#id С‡Р°СЃС‚Р°
 
-                self.times=10#время для того, чтобы собраться игрокам
+                self.times=10#РІСЂРµРјСЏ РґР»СЏ С‚РѕРіРѕ, С‡С‚РѕР±С‹ СЃРѕР±СЂР°С‚СЊСЃСЏ РёРіСЂРѕРєР°Рј
                 
-                self.night_time=60#время для ночи
-                self.day_time=30#время для обсуждения
-                self.vote_time=30#время для голосования
+                self.night_time=60#РІСЂРµРјСЏ РґР»СЏ РЅРѕС‡Рё
+                self.day_time=30#РІСЂРµРјСЏ РґР»СЏ РѕР±СЃСѓР¶РґРµРЅРёСЏ
+                self.vote_time=30#РІСЂРµРјСЏ РґР»СЏ РіРѕР»РѕСЃРѕРІР°РЅРёСЏ
 
 
-        #статус игры возвращает False, пока игра не закончится
+        #СЃС‚Р°С‚СѓСЃ РёРіСЂС‹ РІРѕР·РІСЂР°С‰Р°РµС‚ False, РїРѕРєР° РёРіСЂР° РЅРµ Р·Р°РєРѕРЅС‡РёС‚СЃСЏ
         def game_status(self,bot):
                 
                 flag=False
@@ -42,7 +42,7 @@ class games:
                 else:
                     bot.send_message(self.chat_id,self.game_result['fail'])
         
-        #генерация ролей
+        #РіРµРЅРµСЂР°С†РёСЏ СЂРѕР»РµР№
         def gen_role(self):            
                 players_list=list(self.players.keys())
                 for i in players_list:
@@ -51,11 +51,11 @@ class games:
 class gamer:
         def __init__(self,username,gamer_id,chat_id,true_username):
                 self.death_digit=0
-                self.username=username#Имя и фамилия пользователя
+                self.username=username#РРјСЏ Рё С„Р°РјРёР»РёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
                 self.gamer_id=gamer_id
                 self.chat_id=chat_id
-                self.true_username=true_username#username пользователя, если есть
-                self.sloupok_flag=True#Флаг несовершения действия
+                self.true_username=true_username#username РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ, РµСЃР»Рё РµСЃС‚СЊ
+                self.sloupok_flag=True#Р¤Р»Р°Рі РЅРµСЃРѕРІРµСЂС€РµРЅРёСЏ РґРµР№СЃС‚РІРёСЏ
                 self.role=None
         def about_role(self,game,bot):
                 bot.send_message(self.gamer_id,self.role['discription'])
@@ -64,17 +64,17 @@ class gamer:
                 for j,i in enumerate(clue['actions']):
                         button=types.InlineKeyboardButton(callback_data='check_'+str(n_clue)+"_"+str(j),text=i['button_text'])
                         keyboard.add(button)
-                bot.send_message(self.gamer_id, 'Что из этого исследуешь?', reply_markup=keyboard)
+                bot.send_message(self.gamer_id, 'Р§С‚Рѕ РёР· СЌС‚РѕРіРѕ РёСЃСЃР»РµРґСѓРµС€СЊ?', reply_markup=keyboard)
         def night_action(self,bot,game):
                 keyboard = types.InlineKeyboardMarkup(1)
                 for j in game.players.values():
                         if j.gamer_id!=self.gamer_id:
                                 button=types.InlineKeyboardButton(callback_data='kill_'+str(j.gamer_id),text=j.role['name'])
                                 keyboard.add(button)
-                self.text_message=bot.send_message(self.gamer_id, 'Как думаешь кто убийца?', reply_markup=keyboard)
+                self.text_message=bot.send_message(self.gamer_id, 'РљР°Рє РґСѓРјР°РµС€СЊ РєС‚Рѕ СѓР±РёР№С†Р°?', reply_markup=keyboard)
         def sent_sloupok(self,bot):
                 if self.sloupok_flag:
-                      bot.edit_message_text(chat_id=self.gamer_id,message_id=self.text_message.message_id,text='Время вышло!')
+                      bot.edit_message_text(chat_id=self.gamer_id,message_id=self.text_message.message_id,text='Р’СЂРµРјСЏ РІС‹С€Р»Рѕ!')
 
                 self.sloupok_flag=True
 
@@ -82,27 +82,27 @@ bot = telebot.TeleBot('582982054:AAEINqEzFWa3DNusKiRhltlD7_HzeyqXXb4')
 
 game=games()
 
-#главная функция
+#РіР»Р°РІРЅР°СЏ С„СѓРЅРєС†РёСЏ
 @bot.message_handler(commands=['startgame'])
 def start_game(message):    
         global game
         
-        if not game.game_flag:#если игра еще не запущена
+        if not game.game_flag:#РµСЃР»Рё РёРіСЂР° РµС‰Рµ РЅРµ Р·Р°РїСѓС‰РµРЅР°
                 game.game_flag=True
 
-                #создается клавиатура с кнопкой с ссылкой на бота
-                #добавление в игру осуществляется функцией add_users
+                #СЃРѕР·РґР°РµС‚СЃСЏ РєР»Р°РІРёР°С‚СѓСЂР° СЃ РєРЅРѕРїРєРѕР№ СЃ СЃСЃС‹Р»РєРѕР№ РЅР° Р±РѕС‚Р°
+                #РґРѕР±Р°РІР»РµРЅРёРµ РІ РёРіСЂСѓ РѕСЃСѓС‰РµСЃС‚РІР»СЏРµС‚СЃСЏ С„СѓРЅРєС†РёРµР№ add_users
                 game.chat_id=message.chat.id
                 keyboard = types.InlineKeyboardMarkup()
                 callback_button=types.InlineKeyboardButton(url='telegram.me/sherloki_bot?start={0}'.format(game.chat_id),text='join')
                 keyboard.add(callback_button)
                 
 
-                step=10#интервал обновления таймера в секундах
+                step=10#РёРЅС‚РµСЂРІР°Р» РѕР±РЅРѕРІР»РµРЅРёСЏ С‚Р°Р№РјРµСЂР° РІ СЃРµРєСѓРЅРґР°С…
                 times_format='{0:0>2}:{1:0>2}'.format(game.times//60,game.times%60)
-                players_format='\n'.join([j.username for j in game.players.values()])#строка со списком всех игроков
+                players_format='\n'.join([j.username for j in game.players.values()])#СЃС‚СЂРѕРєР° СЃРѕ СЃРїРёСЃРєРѕРј РІСЃРµС… РёРіСЂРѕРєРѕРІ
 
-                #считываение имени и фамилии пользователя
+                #СЃС‡РёС‚С‹РІР°РµРЅРёРµ РёРјРµРЅРё Рё С„Р°РјРёР»РёРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
                 name=[]
                 if message.from_user.first_name:
                         name.append(message.from_user.first_name)
@@ -110,39 +110,39 @@ def start_game(message):
                      name.append(message.from_user.last_name)
                 name=' '.join(name)
 
-                #клавиатура посылается в чат
-                text=("<a href='http://telegram.me/{0}'>{4}</a> начал игру\nКоличество игроков: {1}\n"
-                "Осталось времени: {2}\n{3}".format(message.from_user.username,len(game.players),
+                #РєР»Р°РІРёР°С‚СѓСЂР° РїРѕСЃС‹Р»Р°РµС‚СЃСЏ РІ С‡Р°С‚
+                text=("<a href='http://telegram.me/{0}'>{4}</a> РЅР°С‡Р°Р» РёРіСЂСѓ\nРљРѕР»РёС‡РµСЃС‚РІРѕ РёРіСЂРѕРєРѕРІ: {1}\n"
+                "РћСЃС‚Р°Р»РѕСЃСЊ РІСЂРµРјРµРЅРё: {2}\n{3}".format(message.from_user.username,len(game.players),
                                                     times_format,players_format,name))
                 send=bot.send_message(message.chat.id, text, reply_markup=keyboard,parse_mode="HTML",disable_web_page_preview=True)
 
-                #изменять значение таймера, пока не выйдет время
+                #РёР·РјРµРЅСЏС‚СЊ Р·РЅР°С‡РµРЅРёРµ С‚Р°Р№РјРµСЂР°, РїРѕРєР° РЅРµ РІС‹Р№РґРµС‚ РІСЂРµРјСЏ
                 while game.times>0:
                         game.times-=step
                         time.sleep(step)
                         times_format='{0:0>2}:{1:0>2}'.format(game.times//60,game.times%60)
                         players_format=('\n'.join(["<a href='http://telegram.me/{0}'>{1}</a>".format(j.true_username,j.username)
                                                    for j in game.players.values()]))
-                        text=("<a href='http://telegram.me/{0}'>{4}</a> начал игру\nКоличество игроков: {1}\n"
-                        "Осталось времени: {2}\n{3}".format(message.from_user.username,len(game.players),
+                        text=("<a href='http://telegram.me/{0}'>{4}</a> РЅР°С‡Р°Р» РёРіСЂСѓ\nРљРѕР»РёС‡РµСЃС‚РІРѕ РёРіСЂРѕРєРѕРІ: {1}\n"
+                        "РћСЃС‚Р°Р»РѕСЃСЊ РІСЂРµРјРµРЅРё: {2}\n{3}".format(message.from_user.username,len(game.players),
                                                             times_format,players_format,name))
                         
                         bot.edit_message_text(chat_id=message.chat.id, message_id=send.message_id, text=text, reply_markup=keyboard,
                                               parse_mode="HTML",disable_web_page_preview=True)
                 
-                #удаление клавиатуры с кнопкой
+                #СѓРґР°Р»РµРЅРёРµ РєР»Р°РІРёР°С‚СѓСЂС‹ СЃ РєРЅРѕРїРєРѕР№
                 bot.edit_message_text(chat_id=game.chat_id, message_id=send.message_id, text=text,parse_mode="HTML",disable_web_page_preview=True)
 
                 if len(game.players)<1:
-                        bot.send_message(message.chat.id, 'Эх, мало игроков(((')
+                        bot.send_message(message.chat.id, 'Р­С…, РјР°Р»Рѕ РёРіСЂРѕРєРѕРІ(((')
                         game=games()
                         
                 else:
-                        bot.send_message(message.chat.id, 'Ура, собрались!\nТак, сейчас раздам всем роли\n')
+                        bot.send_message(message.chat.id, 'РЈСЂР°, СЃРѕР±СЂР°Р»РёСЃСЊ!\nРўР°Рє, СЃРµР№С‡Р°СЃ СЂР°Р·РґР°Рј РІСЃРµРј СЂРѕР»Рё\n')
                         bot.send_message(message.chat.id, game.introduction)
-                        game.gen_role()#генерация ролей
+                        game.gen_role()#РіРµРЅРµСЂР°С†РёСЏ СЂРѕР»РµР№
 
-                        #отправление информации о роли
+                        #РѕС‚РїСЂР°РІР»РµРЅРёРµ РёРЅС„РѕСЂРјР°С†РёРё Рѕ СЂРѕР»Рё
                         for i in game.players.values():
                                 i.about_role(game,bot)
                                 
@@ -150,12 +150,12 @@ def start_game(message):
                         for n_clue,clue in enumerate(game.clues):
                             
 
-                                #стадия алиби
-                                bot.send_message(message.chat.id, "Стадия алиби")
+                                #СЃС‚Р°РґРёСЏ Р°Р»РёР±Рё
+                                bot.send_message(message.chat.id, "РЎС‚Р°РґРёСЏ Р°Р»РёР±Рё")
 
                                 time.sleep(30)
-                                bot.send_message(message.chat.id, "Стадия улик")
-                                #дневные действия
+                                bot.send_message(message.chat.id, "РЎС‚Р°РґРёСЏ СѓР»РёРє")
+                                #РґРЅРµРІРЅС‹Рµ РґРµР№СЃС‚РІРёСЏ
                                 
                                 for i in game.players.values():
                                         times=30
@@ -186,7 +186,7 @@ def callback(call):
                 if data[0] == "kill":
                         game.players[int(data[1])].death_digit+=1
                         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                                              text='Выбор принят ' + game.players[int(data[1])].role['name'])
+                                              text='Р’С‹Р±РѕСЂ РїСЂРёРЅСЏС‚ ' + game.players[int(data[1])].role['name'])
                         game.players[call.message.chat.id].sloupok_flag=False
                 elif data[0] == 'check':
                         out_text=game.clues[int(data[1])]['actions'].pop(int(data[2]))['text']
@@ -199,10 +199,10 @@ def callback(call):
 def add_users(message):
         global game
         text=message.text.split()
-        if len(text)>1:#проверка на то, что человек нажал start, а не прислал команду
-                if game.game_flag:#проверка на то, что начата игра
+        if len(text)>1:#РїСЂРѕРІРµСЂРєР° РЅР° С‚Рѕ, С‡С‚Рѕ С‡РµР»РѕРІРµРє РЅР°Р¶Р°Р» start, Р° РЅРµ РїСЂРёСЃР»Р°Р» РєРѕРјР°РЅРґСѓ
+                if game.game_flag:#РїСЂРѕРІРµСЂРєР° РЅР° С‚Рѕ, С‡С‚Рѕ РЅР°С‡Р°С‚Р° РёРіСЂР°
                         
-                        #считываение имени и фамилии пользователя
+                        #СЃС‡РёС‚С‹РІР°РµРЅРёРµ РёРјРµРЅРё Рё С„Р°РјРёР»РёРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
                         name=[]
                         if message.from_user.first_name:
                                 name.append(message.from_user.first_name)
@@ -211,9 +211,9 @@ def add_users(message):
                         name=' '.join(name)
                         
                         game.players[message.from_user.id]=gamer(name,message.from_user.id,int(text[1]),
-                                                                 message.from_user.username)#создание объекта игрока
+                                                                 message.from_user.username)#СЃРѕР·РґР°РЅРёРµ РѕР±СЉРµРєС‚Р° РёРіСЂРѕРєР°
                         
-                        bot.send_message(message.from_user.id, 'Ты присоединился!')
+                        bot.send_message(message.from_user.id, 'РўС‹ РїСЂРёСЃРѕРµРґРёРЅРёР»СЃСЏ!')
 @bot.message_handler(commands=['forcestart'])
 def force_start(message):
         global game
