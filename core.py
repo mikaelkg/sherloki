@@ -56,7 +56,8 @@ class Gamer:
             button = types.InlineKeyboardButton(callback_data='check_' + str(n_clue) + "_" + str(j),
                                                 text=i['button_text'])
             keyboard.add(button)
-        bot.send_message(self.gamer_id, 'Что из этого исследуешь?', reply_markup=keyboard)
+        text_message = bot.send_message(self.gamer_id, 'Что из этого исследуешь?', reply_markup=keyboard)
+        self.message_id = text_message.message_id
 
     def voting(self, bot, game):
         keyboard = types.InlineKeyboardMarkup(1)

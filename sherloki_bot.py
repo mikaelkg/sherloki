@@ -106,7 +106,7 @@ def start_game(message):
 
             times = 30
 
-            while times >= 0 and not all(map(lambda x: x.sloupok_flag == False, game.players.values())):
+            while times >= 0 and not all(map(lambda x: x.slowpoke_flag == False, game.players.values())):
                 times -= 1
                 time.sleep(1)
 
@@ -121,16 +121,16 @@ def callback(call):
     if game.game_flag:
         data = call.data.split('_')
         if data[0] == "kill":
-            game.players[int(data[1])].death_digit += 1
+            game.players[int(data[1])].blame_digits += 1
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                                   text='Выбор принят ' + game.players[int(data[1])].role['name'])
-            game.players[call.message.chat.id].sloupok_flag = False
+            game.players[call.message.chat.id].slowpoke_flag = False
         elif data[0] == 'check':
             out_text = game.clues[int(data[1])]['actions'].pop(int(data[2]))['text']
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                                   text=out_text)
             bot.send_message(game.chat_id, out_text)
-            game.players[call.message.chat.id].sloupok_flag = False
+            game.players[call.message.chat.id].slowpoke_flag = False
 
 
 @bot.message_handler(commands=['start'])
